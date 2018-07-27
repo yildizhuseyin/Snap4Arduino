@@ -1,0 +1,81 @@
+<blocks app="Snap4Arduino 1.2.4
+, http://snap4arduino.rocks" version="1"><block-definition s="-- $robot-- 3D RoboLab Bloklar V1.1 --" type="command" category="arduino"><header></header><code></code><inputs></inputs><script><block s="doReport"><l></l></block></script></block-definition><block-definition s="Sayısal pin D %&apos;pin&apos; durumu %&apos;deger&apos; ayarla" type="command" category="arduino"><header></header><code></code><inputs><input type="%n">13<options>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13</options></input><input type="%b"></input></inputs><script><block s="digitalWrite"><block var="pin"/><block var="deger"/></block></script></block-definition><block-definition s="Sayısal pin: D %&apos;pin&apos; değerini %&apos;deger&apos; ayarla" type="command" category="arduino"><header></header><code></code><inputs><input type="%n">9<options>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13</options></input><input type="%n">128</input></inputs><script><block s="pwmWrite"><block var="pin"/><block var="deger"/></block></script></block-definition><block-definition s="Analog pin A %&apos;pin&apos; oku" type="reporter" category="arduino"><header></header><code></code><inputs><input type="%n">7<options>0
+1
+2
+3
+4
+5
+6
+7</options></input></inputs><script><block s="doReport"><block s="reportAnalogReading"><block var="pin"/></block></block></script></block-definition><block-definition s="Oranla %&apos;Deger&apos; sayısını %&apos;G1&apos; ile %&apos;G2&apos; arasından %&apos;C1&apos; ile %&apos;C2&apos; arasına" type="reporter" category="operators"><header></header><code></code><inputs><input type="%n">25</input><input type="%n">0</input><input type="%n">100</input><input type="%n">0</input><input type="%n">255</input></inputs><script><block s="doReport"><block s="reportSum"><block var="C1"/><block s="reportProduct"><block s="reportQuotient"><block s="reportDifference"><block var="Deger"/><block var="G1"/></block><block s="reportDifference"><block var="G2"/><block var="G1"/></block></block><block s="reportDifference"><block var="C2"/><block var="C1"/></block></block></block></block></script></block-definition><block-definition s="Mesafe oku pin: D %&apos;Eco&apos; ve D %&apos;Trig&apos;" type="reporter" category="arduino"><header></header><code></code><inputs><input type="%n">12</input><input type="%n">13</input></inputs><script><block s="doRun"><block s="reportJSFunction"><list><l>Eco</l><l>Trig</l></list><l>var myself = this;&#xD;this.arduino.ultrasoundValue = null;&#xD;this.arduino.board.once(&apos;string&apos;, function(data){ myself.arduino.ultrasoundValue = parseFloat(data) });&#xD;this.arduino.board.sp.write(new Buffer([0xF0, 0x08, Eco,Trig, 0xF7]));</l></block><list><block var="Eco"/><block var="Trig"/></list></block><block s="doWaitUntil"><block s="evaluate"><block s="reportJSFunction"><list></list><l>return (this.arduino.ultrasoundValue != null)</l></block><list></list></block></block><block s="doReport"><block s="evaluate"><block s="reportJSFunction"><list></list><l>return this.arduino.ultrasoundValue</l></block><list></list></block></block></script><scripts><script x="442.5000020000001" y="23.69444744444446"><block var="Trig"/></script><script x="388.3333353333333" y="17.861114111111128"><block var="Eco"/></script></scripts></block-definition><block-definition s="Sıcaklık oku pin: A %&apos;pinC&apos;" type="reporter" category="arduino"><header></header><code></code><inputs><input type="%n">6</input></inputs><script><block s="doRun"><block s="reportJSFunction"><list><l>pinC</l></list><l>var myself = this;&#xD;this.arduino.Sicaklik = null;&#xD;this.arduino.board.once(&apos;string&apos;, function(data){ myself.arduino.Sicaklik = parseFloat(data) });&#xD;this.arduino.board.sp.write(new Buffer([0xF0, 0x07, pinC, 0xF7]));</l></block><list><block var="pinC"/></list></block><block s="doWaitUntil"><block s="evaluate"><block s="reportJSFunction"><list></list><l>return (this.arduino.Sicaklik != null)</l></block><list></list></block></block><block s="doReport"><block s="evaluate"><block s="reportJSFunction"><list></list><l>return this.arduino.Sicaklik</l></block><list></list></block></block></script><scripts><script x="355.83333333333337" y="16.999999999999982"><block s="doReport"><block s="reportProduct"><l>500</l><block s="reportQuotient"><block s="errorObsolete"></block><l>1024</l></block></block></block></script></scripts></block-definition><block-definition s="Işık oku pin: A %&apos;pinI&apos;" type="reporter" category="arduino"><header></header><code></code><inputs><input type="%n">5</input></inputs><script><block s="doRun"><block s="reportJSFunction"><list><l>pinI</l></list><l>var myself = this;&#xD;this.arduino.Isik = null;&#xD;this.arduino.board.once(&apos;string&apos;, function(data){ myself.arduino.Isik = parseFloat(data) });&#xD;this.arduino.board.sp.write(new Buffer([0xF0, 0x09, pinI, 0xF7]));</l></block><list><block var="pinI"/></list></block><block s="doWaitUntil"><block s="evaluate"><block s="reportJSFunction"><list></list><l>return (this.arduino.Isik != null)</l></block><list></list></block></block><block s="doReport"><block s="evaluate"><block s="reportJSFunction"><list></list><l>return this.arduino.Isik</l></block><list></list></block></block></script></block-definition><block-definition s="Dijital pin D %&apos;pin&apos; oku" type="predicate" category="arduino"><header></header><code></code><inputs><input type="%n">12<options>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13</options></input></inputs><script><block s="doReport"><block s="reportDigitalReading"><block var="pin"/></block></block></script></block-definition><block-definition s="Tuş (PullUp) oku pin: D %&apos;Tus&apos;" type="predicate" category="arduino"><header></header><code></code><inputs><input type="%n">12</input></inputs><script><block s="doReport"><block s="reportNot"><custom-block s="Dijital pin D %n oku"><block var="Tus"/></custom-block></block></block></script></block-definition><block-definition s="Düdük ses çal pin: D %&apos;pin&apos; frekans: %&apos;frequency&apos;" type="command" category="arduino"><header></header><code></code><inputs><input type="%n">3</input><input type="%n">128</input></inputs><script><block s="doRun"><block s="reportJSFunction"><list><l>pin</l><l>frequency</l></list><l>var freqStr = frequency.toString();&#xD;var array = [0xF0, 0x05, pin];&#xD;for (i = 0; i &lt; freqStr.length; i++){&#xD;	array.push(freqStr.charCodeAt(i));&#xD;}&#xD;array.push(0xF7);&#xD;this.arduino.board.sp.write(new Buffer(array));</l></block><list><block var="pin"/><block var="frequency"/></list></block></script></block-definition><block-definition s="Düdük sesi durdur pin: D %&apos;pin&apos;" type="command" category="arduino"><header></header><code></code><inputs><input type="%n">3</input></inputs><script><block s="doRun"><block s="reportJSFunction"><list><l>pin</l></list><l>this.arduino.board.sp.write(new Buffer([0xF0, 0x06, pin, 0xF7]));</l></block><list><block var="pin"/></list></block></script></block-definition><block-definition s="Nota çal D %&apos;Pin&apos; te %&apos;Nota&apos; notasını %&apos;Sure&apos; sn çal" type="command" category="arduino"><header></header><code></code><inputs><input type="%n">3</input><input type="%txt" readonly="true">Do<options>Do
+Re
+Mi
+Fa
+Sol
+La
+Si</options></input><input type="%txt" readonly="true">1/2<options>1/8
+1/4
+1/2
+3/4
+1
+3/2
+2
+4</options></input></inputs><script><block s="doIf"><block s="reportEquals"><block var="Nota"/><l>Do</l></block><script><custom-block s="Düdük ses çal pin: D %n frekans: %n"><block var="Pin"/><l>262</l></custom-block></script></block><block s="doIf"><block s="reportEquals"><block var="Nota"/><l>Re</l></block><script><custom-block s="Düdük ses çal pin: D %n frekans: %n"><block var="Pin"/><l>294</l></custom-block></script></block><block s="doIf"><block s="reportEquals"><block var="Nota"/><l>Mi</l></block><script><custom-block s="Düdük ses çal pin: D %n frekans: %n"><block var="Pin"/><l>330</l></custom-block></script></block><block s="doIf"><block s="reportEquals"><block var="Nota"/><l>Fa</l></block><script><custom-block s="Düdük ses çal pin: D %n frekans: %n"><block var="Pin"/><l>349</l></custom-block></script></block><block s="doIf"><block s="reportEquals"><block var="Nota"/><l>Sol</l></block><script><custom-block s="Düdük ses çal pin: D %n frekans: %n"><block var="Pin"/><l>392</l></custom-block></script></block><block s="doIf"><block s="reportEquals"><block var="Nota"/><l>La</l></block><script><custom-block s="Düdük ses çal pin: D %n frekans: %n"><block var="Pin"/><l>440</l></custom-block></script></block><block s="doIf"><block s="reportEquals"><block var="Nota"/><l>Si</l></block><script><custom-block s="Düdük ses çal pin: D %n frekans: %n"><block var="Pin"/><l>494</l></custom-block></script></block><block s="doIf"><block s="reportEquals"><block var="Sure"/><l>1/8</l></block><script><block s="doWait"><block s="reportQuotient"><l>1</l><l>8</l></block></block></script></block><block s="doIf"><block s="reportEquals"><block var="Sure"/><l>1/4</l></block><script><block s="doWait"><block s="reportQuotient"><l>1</l><l>4</l></block></block></script></block><block s="doIf"><block s="reportEquals"><block var="Sure"/><l>1/2</l></block><script><block s="doWait"><block s="reportQuotient"><l>1</l><l>2</l></block></block></script></block><block s="doIf"><block s="reportEquals"><block var="Sure"/><l>3/4</l></block><script><block s="doWait"><block s="reportQuotient"><l>3</l><l>4</l></block></block></script></block><block s="doIf"><block s="reportEquals"><block var="Sure"/><l>1</l></block><script><block s="doWait"><l>1</l></block></script></block><block s="doIf"><block s="reportEquals"><block var="Sure"/><l>3/2</l></block><script><block s="doWait"><block s="reportQuotient"><l>3</l><l>2</l></block></block></script></block><block s="doIf"><block s="reportEquals"><block var="Sure"/><l>2</l></block><script><block s="doWait"><l>2</l></block></script></block><block s="doIf"><block s="reportEquals"><block var="Sure"/><l>4</l></block><script><block s="doWait"><l>4</l></block></script></block><custom-block s="Düdük sesi durdur pin: D %n"><block var="Pin"/></custom-block></script><scripts><script x="333.0000000000001" y="182.20000000000005"><block s="doIf"><block s="reportEquals"><block var="Nota"/><l>Do</l></block><script><block s="errorObsolete"></block></script></block></script><script x="391.00000000000006" y="248.79999999999887"><block s="doIf"><block s="reportEquals"><block var="Sure"/><l>1/8</l></block><script><block s="doWait"><block s="reportQuotient"><l>1</l><l>8</l></block></block></script></block></script></scripts></block-definition><block-definition s="Led pin D %&apos;pin&apos; değerini %&apos;Deger&apos;" type="command" category="arduino"><header></header><code></code><inputs><input type="%n">10</input><input type="%n">50<options>0
+25
+50
+75
+100</options></input></inputs><script><block s="pwmWrite"><block var="pin"/><custom-block s="Oranla %n sayısını %n ile %n arasından %n ile %n arasına"><l>25</l><block var="Deger"/><l>100</l><l>0</l><l>255</l></custom-block></block></script></block-definition><block-definition s="Servo pin: D %&apos;pin&apos; açısını %&apos;aci&apos; yap" type="command" category="arduino"><header></header><code></code><inputs><input type="%n">5</input><input type="%n">0<options>0
+30
+60
+90
+120
+150
+180</options></input></inputs><script><block s="servoWrite"><block var="pin"/><block var="aci"/></block></script></block-definition><block-definition s="RGB Led pin R %&apos;R&apos; G %&apos;G&apos; B %&apos;B&apos; değer R %&apos;Dr&apos; G %&apos;Dg&apos; B %&apos;Db&apos; ayarla" type="command" category="arduino"><header></header><code></code><inputs><input type="%n">9</input><input type="%n">10</input><input type="%n">11</input><input type="%n">50<options>0
+25
+50
+75
+100</options></input><input type="%n">50<options>0
+25
+50
+75
+100</options></input><input type="%n">50<options>0
+25
+50
+75
+100</options></input></inputs><script><custom-block s="Led pin D %n değerini %n"><block var="R"/><block s="reportDifference"><l>100</l><block var="Dr"/></block></custom-block><custom-block s="Led pin D %n değerini %n"><block var="G"/><block s="reportDifference"><l>100</l><block var="Dg"/></block></custom-block><custom-block s="Led pin D %n değerini %n"><block var="B"/><block s="reportDifference"><l>100</l><block var="Db"/></block></custom-block></script></block-definition><block-definition s="joystick tuş oku %&apos;p&apos;" type="predicate" category="arduino"><variables><list id="409"><item><l>jb</l></item></list></variables><header></header><code></code><inputs><input type="%n">2</input></inputs><script><block s="doIfElse"><block s="reportGreaterThan"><l>10</l><block s="reportAnalogReading"><block var="p"/></block></block><script><block s="doSetVar"><l>jb</l><block s="reportBoolean"><l><bool>true</bool></l></block></block></script><script><block s="doSetVar"><l>jb</l><block s="reportBoolean"><l><bool>false</bool></l></block></block></script></block><block s="doReport"><block var="jb"/></block></script></block-definition><block-definition s="joystick pin A %&apos;pin&apos; konum %&apos;eksen&apos;" type="reporter" category="arduino"><variables><list id="435"><item><l>konum</l></item><item><l>pot</l></item></list></variables><header></header><code></code><inputs><input type="%n">4</input><input type="%txt" readonly="true">X<options>X
+Y</options></input></inputs><script><block s="doSetVar"><l>pot</l><block s="reportAnalogReading"><block var="pin"/></block></block><block s="doIfElse"><block s="reportGreaterThan"><block var="pot"/><l>630</l></block><script><block s="doSetVar"><l>konum</l><custom-block s="Oranla %n sayısını %n ile %n arasından %n ile %n arasına"><block var="pot"/><l>631</l><l>1050</l><l>0</l><l>10</l></custom-block></block></script><script><block s="doSetVar"><l>konum</l><custom-block s="Oranla %n sayısını %n ile %n arasından %n ile %n arasına"><block var="pot"/><l>0</l><l>631</l><l>-10</l><l>0</l></custom-block></block></script></block><block s="doIf"><block s="reportEquals"><block var="eksen"/><l>Y</l></block><script><block s="doSetVar"><l>konum</l><block s="reportDifference"><l>0</l><block var="konum"/></block></block></script></block><block s="doReport"><block s="reportRound"><block var="konum"/></block></block></script></block-definition></blocks>
